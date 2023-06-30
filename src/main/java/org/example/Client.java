@@ -11,6 +11,9 @@ public class Client {
       this.name = name;
     }
 
+    public Client(long id, String name){
+
+    }
     public Client(){
 
     }
