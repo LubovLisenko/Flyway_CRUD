@@ -3,10 +3,10 @@ package org.example;
 import org.flywaydb.core.Flyway;
 
 public class DatabaseInitService {
+    public static final String connectionUrl = "jdbc:h2:./test";
 
-    public void initDb(String  connectionUrl){
-        // Create the Flyway instance and point it to the database
-       // String connectionUrl = new Prefs().getString(Prefs.DB_JDBC_CONNECTION_URL);
+   public void initDb(){
+
         Flyway flyway = Flyway
                 .configure()
                 .dataSource(connectionUrl, null, null)
