@@ -22,10 +22,12 @@ class ClientServiceTest {
     @BeforeEach
     public void beforeEach() throws SQLException {
         final String connectionUrl = "jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1";
-        new DatabaseInitService().initDb(connectionUrl);
+        new DatabaseInitService().initDb();
 
         connection = DriverManager.getConnection(connectionUrl);
         service = new ClientService(connection);
+
+        //service.clear();
     }
     // create client with all field
     @Test
