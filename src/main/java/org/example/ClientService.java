@@ -18,6 +18,7 @@ public class ClientService {
     private PreparedStatement updateSt;
     private PreparedStatement deleteById;
     private PreparedStatement listAll;
+    private PreparedStatement clearSt;
 
     public ClientService(Connection connection) throws SQLException {
         createSt = connection
@@ -30,6 +31,7 @@ public class ClientService {
         updateSt = connection.prepareStatement("UPDATE client SET name = ?  WHERE id = ?");
         deleteById = connection.prepareStatement("DELETE FROM client WHERE id = ?");
         listAll = connection.prepareStatement("SELECT id, name FROM client");
+        clearSt = connection.prepareStatement("DELETE FROM client");
 
     }
 
@@ -37,11 +39,13 @@ public class ClientService {
         createSt.setString(1, client.getName());
         createSt.executeUpdate();
 
-        long id;
+        long id = -1;
         try (ResultSet rs = selectMaxIDSt.executeQuery()) {
             rs.next();
             id = rs.getLong("maxId");
-        }
+        } catch (SQLException e){
+
+        } System.out.println("Wrong name");
         return id;
     }
 
@@ -66,11 +70,12 @@ public class ClientService {
     }
 
     public void setName(Client client) throws SQLException {
-        updateSt.setString(1, client.getName());
-        updateSt.setLong(2, client.getId());
-        updateSt.executeUpdate();
-
-
+        try {
+            updateSt.setString(1, client.getName());
+            updateSt.setLong(2, client.getId());
+            updateSt.executeUpdate();
+        } catch (SQLException e){
+        } System.out.println("Wrong name");
     }
 
     public List<Client> listAll() throws SQLException {
@@ -88,6 +93,10 @@ public class ClientService {
         }
 
     }
+
+//    public void clear() throws SQLException {
+//        clearSt.executeUpdate();
+//    }
 }
 
 
